@@ -22,20 +22,6 @@ class ApiController
     }
 
     /**
-     * Sets the value of statusCode.
-     *
-     * @param integer $statusCode the status code
-     *
-     * @return self
-     */
-    protected function setStatusCode($statusCode)
-    {
-        $this->statusCode = $statusCode;
-
-        return $this;
-    }
-
-    /**
      * Returns a JSON response
      *
      * @param array $data

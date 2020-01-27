@@ -43,9 +43,8 @@ class RecipeServiceTest extends TestCase
                 "recipe_count" => 0,
             ),
         );
-        
-        foreach ($checklist as $today)
-        {
+
+        foreach ($checklist as $today) {
             $recipeList = $recipeService->recipeList($today["date"])["recipes"];
 
             if (!empty($recipeList)) {
@@ -90,17 +89,43 @@ class RecipeServiceTest extends TestCase
             ),
         );
 
-        foreach ($checklist as $recipe)
-        {
+        foreach ($checklist as $recipe) {
             $score = 0;
-            foreach ($recipe["best_before"] as $bestBefore)
-            {
-                if ($recipeService->expiryDate($bestBefore, $today)) {
+            foreach ($recipe["best_before"] as $bestBefore) {
+                if ($recipeService->excessDate($bestBefore, $today)) {
                     $score += $recipeService->checkScore($bestBefore, $today);
                 }
             }
 
             $this->assertEquals($recipe["score"], $score);
+        }
+    }
+
+    public function testExcessDate()
+    {
+        $recipeService = new RecipeService();
+
+        $today = "2019-03-13";
+        $checklist = array(
+            array(
+                "best_before" => "2019-03-08",
+                "excess" => false,
+            ),
+            array(
+                "best_before" => "2019-03-15",
+                "excess" => true,
+            ),
+            // Excess zero is true
+            array(
+                "best_before" => "2019-03-13",
+                "excess" => true,
+            ),
+        );
+
+        foreach ($checklist as $date) {
+            $this->assertEquals(!$date["excess"],
+            $recipeService->excessDate($date["best_before"], $today),
+            $date["best_before"]." is ".(!$date["excess"] == true ? "not excessive" : "excessive"));
         }
     }
 }

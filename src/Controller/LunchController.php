@@ -7,8 +7,14 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class LunchController extends ApiController
 {
+    /**
+     * @var RecipeService $recipeService
+     */
     private $recipeService;
 
+    /**
+     * LunchController constructor
+     */
     public function __construct(RecipeService $recipeService)
     {
         $this->recipeService = $recipeService;

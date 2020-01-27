@@ -46,20 +46,17 @@ class RecipeService
     private function checkIngredients($recipes, $ingredients, $today)
     {
         $recipeScore = [];
-        foreach ($recipes["recipes"] as $key => $recipe)
-        {
+        foreach ($recipes["recipes"] as $key => $recipe) {
             $exists = 0;
             $score = array(
                 "index" => $key,
                 "score" => 0,
             );
 
-            foreach ($recipe["ingredients"] as $list)
-            {
-                foreach ($ingredients["ingredients"] as $item)
-                {
-                    if ($item["title"] == $list && !$this->expiryDate($item["use-by"], $today)) {
-                        if ($this->expiryDate($item["best-before"], $today)) {
+            foreach ($recipe["ingredients"] as $list) {
+                foreach ($ingredients["ingredients"] as $item) {
+                    if ($item["title"] == $list && !$this->excessDate($item["use-by"], $today)) {
+                        if ($this->excessDate($item["best-before"], $today)) {
                             $score["score"] += $this->checkScore($item["best-before"], $today);
                         }
                         $exists += 1;
@@ -88,22 +85,21 @@ class RecipeService
         });
 
         $recipeList["recipes"] = [];
-        foreach ($recipeScore as $list)
-        {
+        foreach ($recipeScore as $list) {
             array_push($recipeList["recipes"], $recipes["recipes"][$list["index"]]);
         }
         return $recipeList;
     }
 
     /**
-     * @param date $expiry
+     * @param date $date
      * @param date $today
      * 
      * @return bool
      */
-    public function expiryDate($expiry, $today)
+    public function excessDate($date, $today)
     {
-        if (strtotime($expiry) >= strtotime($today)) {
+        if (strtotime($date) >= strtotime($today)) {
             return false;
         }
         return true;

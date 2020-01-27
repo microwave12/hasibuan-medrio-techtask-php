@@ -6,7 +6,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class ApiController
 {
-
     /**
      * @var integer HTTP status code - 200 by default
      */

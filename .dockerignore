@@ -1,0 +1,12 @@
+.git
+.scannerwork
+.idea
+.env
+node_modules
+var
+vendor
+*Dockerfile
+docker-compose.yml
+bin/.phpunit
+.phpunit.result.cache
+/phpunit.xml

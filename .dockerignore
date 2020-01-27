@@ -1,7 +1,6 @@
 .git
 .scannerwork
 .idea
-.env
 node_modules
 var
 vendor

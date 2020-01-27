@@ -14,8 +14,6 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
 
 COPY . .
 
-ADD .env.prod .env
-
 RUN mkdir var
 
 RUN chown -R www-data:www-data var
